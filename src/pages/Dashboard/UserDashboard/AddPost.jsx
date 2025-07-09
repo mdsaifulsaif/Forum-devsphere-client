@@ -33,7 +33,7 @@ const AddPost = () => {
     queryKey: ["posts", user?.email],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/posts?email=${user?.email}`
+        `http://localhost:3000/postsbyuser?email=${user?.email}`
       );
       return res.data;
     },
@@ -45,7 +45,7 @@ const AddPost = () => {
     queryKey: ["userInfo", user?.email],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/users?email=${user?.email}`
+        `http://localhost:3000/usersbyemail?email=${user?.email}`
       );
       return res.data;
     },

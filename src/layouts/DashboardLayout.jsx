@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { FaBars, FaTimes, FaUser, FaPlus, FaList } from "react-icons/fa";
 import Logo from "../Components/Logo";
+import AdminSidebarLinks from "../Components/AdminSidebarLinks";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ const DashboardLayout = () => {
             <Logo />
           </div>
           <NavLink
-            to="/dashboard/profile"
+            to="/dashboard/my-profile"
             className={({ isActive }) =>
               `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
                 isActive
@@ -42,7 +43,7 @@ const DashboardLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/dashboard/add-post"
+            to="/dashboard/addpost"
             className={({ isActive }) =>
               `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
                 isActive
@@ -70,6 +71,8 @@ const DashboardLayout = () => {
             <FaList />
             <span>My Posts</span>
           </NavLink>
+
+          <AdminSidebarLinks />
         </div>
       </div>
 

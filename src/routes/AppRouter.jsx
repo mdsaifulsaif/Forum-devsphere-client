@@ -9,6 +9,10 @@ import Login from "../pages/Login/Login";
 import PrivetRouteUser from "../PrivetRouts/PrivetRouteforuser/PrivetRouteUser";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AddPost from "../pages/Dashboard/UserDashboard/AddPost";
+import MyProfile from "../pages/Dashboard/UserDashboard/MyProfile";
+import MyPosts from "../pages/Dashboard/UserDashboard/MyPosts";
+import AdminProfile from "../pages/Dashboard/AdminDashboard/AdminProfile";
+import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +44,22 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/addpost",
         element: <AddPost />,
+      },
+      {
+        path: "/dashboard/My-profile",
+        element: <MyProfile />,
+      },
+      {
+        path: "/dashboard/my-posts",
+        element: <MyPosts />,
+      },
+      {
+        path: "/dashboard/admin-profile",
+        element: <AdminProfile />,
+      },
+      {
+        path: "/dashboard/manage-users",
+        element: <ManageUsers />,
       },
     ],
   },
