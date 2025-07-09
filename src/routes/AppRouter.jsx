@@ -40,6 +40,7 @@ export const router = createBrowserRouter([
         <DashboardLayout />
       </PrivetRouteUser>
     ),
+
     children: [
       {
         path: "/dashboard/addpost",

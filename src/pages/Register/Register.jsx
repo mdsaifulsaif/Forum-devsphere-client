@@ -1,6 +1,6 @@
 import React, { use, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaGoogle } from "react-icons/fa";
 import Lottie from "lottie-react";
 import signupAnimation from "../../assets/Animations/Animation - auth.json";
@@ -9,10 +9,15 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 const Register = () => {
-  const { createUserEmailPassword, updateUser, createUserUseGoogl } =
-    use(AuthContext);
+  const {
+    createUserEmailPassword,
+    updateUser,
+    user,
+    setUser,
+    createUserUseGoogl,
+  } = use(AuthContext);
+  const navigate = useNavigate();
   const [imageURL, setImageURL] = useState("");
-  const imgbbAPI = import.meta.env.VITE_IMGBB_API_KEY;
 
   const {
     register,
@@ -20,73 +25,60 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  // Image Upload Function
-  // const handlePhoto = async (e) => {
-  //   console.log("imaggg");
-  //   // const image = e.target.files[0];
-  //   // const formData = new FormData();
-  //   // formData.append("image", image);
-
-  //   // try {
-  //   //   const res = await axios.post(
-  //   //     `https://api.imgbb.com/1/upload?key=${imgbbAPI}`,
-  //   //     formData
-  //   //   );
-  //   //   if (res.data && res.data.success) {
-  //   //     const uploadedURL = res.data.data.display_url;
-  //   //     setImageURL(uploadedURL);
-  //   //     console.log("Uploaded Image URL:", uploadedURL); // ✅ Log image URL only
-  //   //   }
-  //   // } catch (err) {
-  //   //   console.error("Image upload failed:", err);
-  //   // }
-  // };
-
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
     const name = data.name;
 
+    console.log(email, password, name);
+
     createUserEmailPassword(email, password)
-      .then(async (res) => {
-        // update user
-        await updateUser({
-          displayName: name,
-          photoURL: "url",
-        });
-        if (res?.user) {
-          // send user data to backend
-          const saveUser = {
-            name: res.user.displayName,
-            email: res.user.email,
-            photoURL: "url",
-            role: "user",
-            badge: "bronze",
-            isMember: false,
-            createdAt: new Date(),
-          };
-
-          axios
-            .post("http://localhost:3000/users", saveUser)
-            .then((res) => {
-              console.log("User saved to DB:", res.data);
-            })
-            .catch((err) => {
-              console.error("User save error:", err);
-            });
-
-          Swal.fire({
-            title: "Success!",
-            text: "User has been created successfully.",
-            icon: "success",
-            confirmButtonText: "OK",
-            customClass: {
-              confirmButton: "text-white bg-[#129990] px-4 py-2 rounded",
-              popup: "text-[#129990]",
-            },
-            buttonsStyling: false,
+      .then((res) => {
+        // send user data to bakend
+        const saveUser = {
+          name: name,
+          email: res.user.email,
+          photoURL: imageURL,
+          role: "user",
+          badge: "bronze",
+          isMember: false,
+          createdAt: new Date(),
+        };
+        axios
+          .post("http://localhost:3000/users", saveUser)
+          .then((res) => {
+            console.log("User saved to DB:", res.data);
+          })
+          .catch((err) => {
+            console.error("User save error:", err);
           });
-        }
+
+        // update profile in firebase
+        const usernameandphoto = {
+          displayName: name,
+          photoURL: imageURL,
+        };
+        updateUser(usernameandphoto)
+          .then((res) => {
+            console.log("user profile is updated");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        Swal.fire({
+          title: "Success!",
+          text: "User has been created successfully.",
+          icon: "success",
+          confirmButtonText: "OK",
+          customClass: {
+            confirmButton: "text-white bg-[#129990] px-4 py-2 rounded",
+            popup: "text-[#129990]",
+          },
+          buttonsStyling: false,
+        });
+        navigate("/");
+
+        console.log(res);
       })
       .catch((error) => {
         Swal.fire({
@@ -140,6 +132,7 @@ const Register = () => {
             buttonsStyling: false,
           });
         }
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire({
@@ -154,6 +147,18 @@ const Register = () => {
           buttonsStyling: false,
         });
       });
+  };
+
+  const handleImage = async (e) => {
+    const profile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", profile);
+    const imbbApi = `https://api.imgbb.com/1/upload?&key=${
+      import.meta.env.VITE_IMBB_API_KEY
+    }`;
+    const res = await axios.post(imbbApi, formData);
+
+    setImageURL(res.data.data.url);
   };
 
   return (
@@ -186,20 +191,16 @@ const Register = () => {
               <p className="text-sm text-red-500">{errors.name.message}</p>
             )}
           </div>
-
-          {/* <div>
-            <label className="block mb-1 font-medium">Photo</label>
+          {/* imgge  */}
+          <div>
+            <label className="block mb-1 font-medium">Image</label>
             <input
-              onChange={handlePhoto}
+              onChange={handleImage}
               type="file"
-              accept="image/*"
-              {...register("photo", { required: "Photo is required" })}
               className="w-full border border-gray-300 rounded px-3 py-2"
+              placeholder="Your name"
             />
-            {errors.photo && (
-              <p className="text-sm text-red-500">{errors.photo.message}</p>
-            )}
-          </div> */}
+          </div>
 
           <div>
             <label className="block mb-1 font-medium">Email</label>

@@ -20,7 +20,7 @@ const Login = () => {
     const email = data.email;
     const password = data.password;
 
-    LoginUserEmailPassword()
+    LoginUserEmailPassword(email, password)
       .then((res) => {
         if (res.user) {
           Swal.fire({

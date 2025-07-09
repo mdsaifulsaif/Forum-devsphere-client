@@ -6,6 +6,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../../../context/AuthContext/AuthContext";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import { useContext } from "react";
+import LoadingPage from "../../../Components/LoadingPage";
 
 const AddPost = () => {
   const axiosSecure = UseAxiosSecure();
@@ -29,7 +30,11 @@ const AddPost = () => {
   });
 
   // ✅ Fetch posts by user email
-  const { data: userPosts = [], refetch: refetchPosts } = useQuery({
+  const {
+    isLoading,
+    data: userPosts = [],
+    refetch: refetchPosts,
+  } = useQuery({
     queryKey: ["posts", user?.email],
     queryFn: async () => {
       const res = await axios.get(
@@ -41,7 +46,7 @@ const AddPost = () => {
   });
 
   // ✅ Fetch user info
-  const { data: userInfo = {} } = useQuery({
+  const { isLoading: userlod, data: userInfo = {} } = useQuery({
     queryKey: ["userInfo", user?.email],
     queryFn: async () => {
       const res = await axios.get(
@@ -90,6 +95,10 @@ const AddPost = () => {
       });
     }
   };
+
+  if (isLoading && userlod) {
+    return <LoadingPage />;
+  }
 
   // ✅ Limit check for non-member
   if (!isMember && postCount >= 5) {

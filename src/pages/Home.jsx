@@ -6,7 +6,7 @@ import PostCard from "../Components/PostCard";
 const dummyPost = {
   _id: "abc123",
   authorName: "Md. Saiful Saif",
-  authorImage: "https://i.ibb.co/album/default.png",
+  authorImage: "sutho img",
   title: "How to implement Firebase Auth in React?",
   tags: ["react", "firebase", "auth"],
   createdAt: "2025-07-06T10:00:00Z",
@@ -24,7 +24,7 @@ function Home() {
   return (
     <div className="h-[800px]">
       <Banner onSearch={handleTagSearch} />
-      <TagList onTagSelect={handleTagSearch} />
+      {/* <TagList onTagSelect={handleTagSearch} /> */}
       <PostCard post={dummyPost} />
     </div>
   );

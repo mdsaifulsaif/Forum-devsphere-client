@@ -1,24 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import LoadingPage from "../../../Components/LoadingPage";
 
+let debounceTimer;
+
 const ManageUsers = () => {
   const axiosSecure = UseAxiosSecure();
   const queryClient = useQueryClient();
-  const [search, setSearch] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  //  Fetch Users (with server-side search by username)
+  // ✅ Debounce logic
+  useEffect(() => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      setDebouncedSearch(searchText.trim());
+    }, 500); // 500ms delay
+  }, [searchText]);
+
+  // ✅ Fetch Users based on debounced search
   const { data: users = [], isLoading } = useQuery({
-    queryKey: ["users", search],
+    queryKey: ["users", debouncedSearch],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users-by-search?search=${search}`);
+      const res = await axiosSecure.get(`/users?search=${debouncedSearch}`);
       return res.data;
     },
   });
 
-  //  Toggle Role Mutation (admin/user)
+  // ✅ Toggle Admin/User Role
   const toggleRoleMutation = useMutation({
     mutationFn: async (userId) => {
       const res = await axiosSecure.patch(`/users/toggle-role/${userId}`);
@@ -26,70 +37,57 @@ const ManageUsers = () => {
     },
     onSuccess: () => {
       Swal.fire("Updated!", "User role changed successfully.", "success");
-      queryClient.invalidateQueries(["users", search]);
+      queryClient.invalidateQueries(["users", debouncedSearch]);
     },
     onError: () => {
       Swal.fire("Error", "Failed to change role.", "error");
     },
   });
 
-  //  Search Handler
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const value = e.target.search.value.trim();
-    setSearch(value);
-  };
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  if (isLoading) return <LoadingPage />;
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold text-[#129990] mb-4">Manage Users</h2>
 
-      {/* Search */}
-      <form onSubmit={handleSearch} className="mb-4 flex gap-2">
+      {/* 🔍 Live Search Input */}
+      <div className="mb-4">
         <input
           type="text"
-          name="search"
           placeholder="Search by username..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
           className="border px-4 py-2 rounded w-full"
         />
-        <button
-          type="submit"
-          className="bg-[#129990] text-white px-4 py-2 rounded hover:bg-[#0e7f7f]"
-        >
-          Search
-        </button>
-      </form>
+      </div>
 
       {/* Users Table */}
-      {isLoading ? (
-        <p className="text-gray-500">Loading users...</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full border rounded">
-            <thead>
-              <tr className="bg-[#129990] text-white">
-                <th className="py-2 px-4 text-left">Name</th>
-                <th className="py-2 px-4 text-left">Email</th>
-                <th className="py-2 px-4 text-left">Role</th>
-                <th className="py-2 px-4 text-left">Membership</th>
-                <th className="py-2 px-4 text-left">Action</th>
+      <div className="overflow-x-auto">
+        <table className="w-full border rounded text-sm">
+          <thead>
+            <tr className="bg-[#129990] text-white">
+              <th className="py-2 px-4 text-left">Name</th>
+              <th className="py-2 px-4 text-left">Email</th>
+              <th className="py-2 px-4 text-left">Role</th>
+              <th className="py-2 px-4 text-left">Membership</th>
+              <th className="py-2 px-4 text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="py-4 text-center text-gray-500">
+                  No users found.
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr
-                  key={user._id}
-                  className="border-b hover:bg-gray-50 transition"
-                >
+            ) : (
+              users.map((user) => (
+                <tr key={user._id} className="border-b hover:bg-gray-50">
                   <td className="py-2 px-4">{user.name}</td>
                   <td className="py-2 px-4">{user.email}</td>
                   <td className="py-2 px-4 capitalize">{user.role}</td>
                   <td className="py-2 px-4">
-                    {user.isMember ? "Gold" : "Free"}
+                    {user.isMember ? "Gold" : "Bronz"}
                   </td>
                   <td className="py-2 px-4">
                     <button
@@ -104,18 +102,11 @@ const ManageUsers = () => {
                     </button>
                   </td>
                 </tr>
-              ))}
-              {users.length === 0 && (
-                <tr>
-                  <td colSpan="5" className="py-4 text-center text-gray-500">
-                    No users found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

@@ -1,19 +1,33 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import UseAxiosSecure from "../Hooks/UseAxiosSecure";
+import LoadingPage from "./LoadingPage";
 
-const TagList = ({ onTagSelect }) => {
-  const [tags, setTags] = useState([]);
+const TagList = () => {
+  const axiosSecur = UseAxiosSecure();
+  // const [tags, setTags] = useState([]);
 
-  useEffect(() => {
-    // Initially you can use static tags or fetch from backend
-    fetch("https://your-server.com/tags")
-      .then((res) => res.json())
-      .then((data) => setTags(data))
-      .catch((err) => {
-        console.error("Failed to load tags", err);
-        setTags(["react", "node", "firebase", "mongodb", "auth", "dashboard"]); // fallback static
-      });
-  }, []);
+  const { data: tags = {}, isLoading } = useQuery({
+    queryKey: ["tags"],
+    queryFn: async () => {
+      const res = await axiosSecur.get("/tags");
+      return res.data;
+    },
+  });
+  // useEffect(() => {
+  //   // Initially you can use static tags or fetch from backend
+  //   fetch("https://your-server.com/tags")
+  //     .then((res) => res.json())
+  //     .then((data) => setTags(data))
+  //     .catch((err) => {
+  //       console.error("Failed to load tags", err);
+  //       setTags(["react", "node", "firebase", "mongodb", "auth", "dashboard"]); // fallback static
+  //     });
+  // }, []);
 
+  if (isLoading) {
+    return <LoadingPage />;
+  }
   return (
     <div className="py-8 max-w-6xl mx-auto px-4">
       <h2 className="text-xl font-semibold mb-4 text-[#129990]">Browse Tags</h2>
@@ -25,7 +39,7 @@ const TagList = ({ onTagSelect }) => {
             onClick={() => onTagSelect(tag)}
             className="bg-[#129990]/10 text-[#129990] px-4 py-2 rounded-full hover:bg-[#129990]/20 transition"
           >
-            #{tag}
+            #{tag.name}
           </button>
         ))}
       </div>

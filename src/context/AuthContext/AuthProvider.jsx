@@ -32,7 +32,6 @@ function AuthProvider({ children }) {
   };
   //update user
   const updateUser = (userinfo) => {
-    setuserLoadding(true);
     return updateProfile(auth.currentUser, userinfo);
   };
   //  logOut user
@@ -54,6 +53,7 @@ function AuthProvider({ children }) {
   const userData = {
     user,
     userLoadding,
+    setUser,
     createUserEmailPassword,
     LoginUserEmailPassword,
     createUserUseGoogl,

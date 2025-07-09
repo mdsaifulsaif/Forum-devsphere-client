@@ -15,7 +15,7 @@ const MyPosts = () => {
   const { data: posts = [], isLoading } = useQuery({
     queryKey: ["myPosts", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/posts?email=${user?.email}`);
+      const res = await axiosSecure.get(`/postsbyuser?email=${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email,
