@@ -6,6 +6,9 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
+import PrivetRouteUser from "../PrivetRouts/PrivetRouteforuser/PrivetRouteUser";
+import DashboardLayout from "../layouts/DashboardLayout";
+import AddPost from "../pages/Dashboard/UserDashboard/AddPost";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +26,20 @@ export const router = createBrowserRouter([
       {
         path: "/join",
         Component: Login,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivetRouteUser>
+        <DashboardLayout />
+      </PrivetRouteUser>
+    ),
+    children: [
+      {
+        path: "/dashboard/addpost",
+        element: <AddPost />,
       },
     ],
   },

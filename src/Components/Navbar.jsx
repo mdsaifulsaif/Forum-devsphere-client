@@ -4,6 +4,7 @@ import { FaBars, FaBell, FaTimes } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import logo from "../assets/Images/logo.jpg";
 import { AuthContext } from "../context/AuthContext/AuthContext";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,12 +33,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="Logo" className="w-8 h-8" />
-          <span className="text-xl font-semibold text-[#129990]">Forum</span>
-        </Link>
-
+        <Logo />
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center space-x-6 font-medium">
           {navLinks}
