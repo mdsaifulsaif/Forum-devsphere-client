@@ -18,6 +18,7 @@ import AddTag from "../pages/Dashboard/AdminDashboard/AddTag";
 import MakeAnnouncement from "../pages/Dashboard/AdminDashboard/MakeAnnouncement";
 import PostComments from "../pages/Dashboard/UserDashboard/PostComments";
 import ReportedComments from "../pages/Dashboard/AdminDashboard/ReportedComments";
+import Payment from "../pages/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/addpost",
         element: <AddPost />,
+      },
+      {
+        path: "/dashboard/payment/:id",
+        element: <Payment />,
       },
       {
         path: "/dashboard/My-profile",

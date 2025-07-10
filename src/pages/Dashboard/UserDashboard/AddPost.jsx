@@ -7,6 +7,7 @@ import { AuthContext } from "../../../context/AuthContext/AuthContext";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import { useContext } from "react";
 import LoadingPage from "../../../Components/LoadingPage";
+import { Link } from "react-router";
 
 const AddPost = () => {
   const axiosSecure = UseAxiosSecure();
@@ -60,6 +61,8 @@ const AddPost = () => {
   const isMember = !!userInfo.isMember;
   const postCount = userPosts.length;
 
+  console.log("user info form databse", userInfo);
+
   // ✅ Post Submission
   const onSubmit = async (data) => {
     const postData = {
@@ -108,12 +111,13 @@ const AddPost = () => {
           Post Limit Reached!
         </h2>
         <p className="mb-4">You can only post 5 times without membership.</p>
-        <a
+        <Link
+          to={`/dashboard/payment/${userInfo._id}`}
           href="/membership"
           className="bg-[#129990] text-white px-5 py-2 rounded hover:bg-[#0e7f7f]"
         >
           Become a Member
-        </a>
+        </Link>
       </div>
     );
   }

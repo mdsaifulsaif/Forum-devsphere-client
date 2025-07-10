@@ -42,6 +42,7 @@ const Register = () => {
           role: "user",
           badge: "bronze",
           isMember: false,
+          cost: 10,
           createdAt: new Date(),
         };
         axios
@@ -107,6 +108,7 @@ const Register = () => {
             role: "user",
             badge: "bronze",
             isMember: false,
+            cost: 10,
             createdAt: new Date(),
           };
 
