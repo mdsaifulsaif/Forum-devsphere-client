@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router"; // ✅ fix router import
 import { FaBars, FaBell, FaTimes } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext/AuthContext";
 import Logo from "./Logo";
+import NotificationIcon from "./NotificationIcon";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,7 +38,8 @@ const Navbar = () => {
         <ul className="hidden md:flex items-center space-x-6 font-medium">
           {navLinks}
           <li>
-            <FaBell className="text-lg hover:text-[#129990]" />
+            {/* <FaBell className="text-lg hover:text-[#129990]" /> */}
+            <NotificationIcon />
           </li>
           {user ? (
             <div className="relative">

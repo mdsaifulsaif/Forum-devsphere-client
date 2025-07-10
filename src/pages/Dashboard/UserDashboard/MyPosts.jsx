@@ -80,7 +80,7 @@ const MyPosts = () => {
                     <td className="p-2 text-center">{voteCount}</td>
                     <td className="p-2 text-center">
                       <Link
-                        to={`/comments/${post._id}`}
+                        to={`/dashboard/comments/${post._id}`}
                         className="text-[#129990] underline hover:text-[#0f7f7f]"
                       >
                         View Comments

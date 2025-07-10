@@ -1,9 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import UseAxiosSecure from "../Hooks/UseAxiosSecure";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext/AuthContext";
+
+import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import { AuthContext } from "../../../context/AuthContext/AuthContext";
 
 const MakeAnnouncement = () => {
   const axiosSecure = UseAxiosSecure();

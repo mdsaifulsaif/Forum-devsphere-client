@@ -15,6 +15,9 @@ import AdminProfile from "../pages/Dashboard/AdminDashboard/AdminProfile";
 import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers";
 import PostDetails from "../pages/PostDetails";
 import AddTag from "../pages/Dashboard/AdminDashboard/AddTag";
+import MakeAnnouncement from "../pages/Dashboard/AdminDashboard/MakeAnnouncement";
+import PostComments from "../pages/Dashboard/UserDashboard/PostComments";
+import ReportedComments from "../pages/Dashboard/AdminDashboard/ReportedComments";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +64,10 @@ export const router = createBrowserRouter([
         element: <MyPosts />,
       },
       {
+        path: "/dashboard/comments/:postId",
+        element: <PostComments />,
+      },
+      {
         path: "/dashboard/admin-profile",
         element: <AdminProfile />,
       },
@@ -69,8 +76,16 @@ export const router = createBrowserRouter([
         element: <ManageUsers />,
       },
       {
+        path: "/dashboard/reported-comments",
+        element: <ReportedComments />,
+      },
+      {
         path: "/dashboard/add-tag",
         element: <AddTag />,
+      },
+      {
+        path: "/dashboard/announcement",
+        element: <MakeAnnouncement />,
       },
     ],
   },

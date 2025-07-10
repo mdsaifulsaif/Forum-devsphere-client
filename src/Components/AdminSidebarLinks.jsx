@@ -25,7 +25,6 @@ const AdminSidebarLinks = ({ setIsOpen }) => {
         <FaUserShield />
         <span>Admin Profile</span>
       </NavLink>
-
       {/* Manage Users */}
       <NavLink
         to="/dashboard/manage-users"
@@ -41,10 +40,9 @@ const AdminSidebarLinks = ({ setIsOpen }) => {
         <FaUsers />
         <span>Manage Users</span>
       </NavLink>
-
       {/* Reported Comments */}
       <NavLink
-        to="/dashboard/admin/reported-comments"
+        to="/dashboard/reported-comments"
         className={({ isActive }) =>
           `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
             isActive
@@ -57,10 +55,9 @@ const AdminSidebarLinks = ({ setIsOpen }) => {
         <FaFlag />
         <span>Reported Activities</span>
       </NavLink>
-
       {/* Make Announcement */}
       <NavLink
-        to="/dashboard/admin/announcement"
+        to="/dashboard/announcement"
         className={({ isActive }) =>
           `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
             isActive
@@ -73,7 +70,6 @@ const AdminSidebarLinks = ({ setIsOpen }) => {
         <FaBullhorn />
         <span>Make Announcement</span>
       </NavLink>
-
       <NavLink
         to="/dashboard/add-tag"
         className={({ isActive }) =>
