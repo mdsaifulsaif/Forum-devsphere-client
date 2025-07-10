@@ -2,10 +2,11 @@ import React, { use, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaRegCommentDots, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { Link } from "react-router";
-import UseAxiosSecure from "../Hooks/UseAxiosSecure";
+// import UseAxiosSecure from "../Hooks/UseAxiosSecure";
 import LoadingPage from "./LoadingPage";
 import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthContext/AuthContext";
+import UseAxiosSecure from "../Hooks/UseAxiosSecure";
 
 const AllPosts = () => {
   const axiosSecure = UseAxiosSecure();
@@ -18,7 +19,7 @@ const AllPosts = () => {
     queryKey: ["posts", sortBy],
     queryFn: async () => {
       const endpoint = sortBy === "popular" ? "/posts/popular" : "/posts";
-      const res = await axiosSecure.get(endpoint);
+      const res = await axiosSecure.get(endpoint, { withCredentials: true });
       return res.data;
     },
   });

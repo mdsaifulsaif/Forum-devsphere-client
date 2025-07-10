@@ -13,6 +13,7 @@ import MyProfile from "../pages/Dashboard/UserDashboard/MyProfile";
 import MyPosts from "../pages/Dashboard/UserDashboard/MyPosts";
 import AdminProfile from "../pages/Dashboard/AdminDashboard/AdminProfile";
 import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers";
+import PostDetails from "../pages/PostDetails";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "/join",
         Component: Login,
+      },
+      {
+        path: "/post/:id",
+        Component: PostDetails,
       },
     ],
   },

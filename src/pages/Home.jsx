@@ -25,9 +25,9 @@ function Home() {
   return (
     <div className="">
       <Banner onSearch={handleTagSearch} />
-      {/* <TagList onTagSelect={handleTagSearch} /> */}
+      <TagList onTagSelect={handleTagSearch} />
       <AllPosts />
-      <PostCard post={dummyPost} />
+      {/* <PostCard post={dummyPost} /> */}
     </div>
   );
 }
