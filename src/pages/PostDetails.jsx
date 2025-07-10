@@ -67,10 +67,12 @@ const PostDetails = () => {
     upVote,
     downVote,
   } = post || {};
+  console.log(user);
 
   //   coment data send to backend
   const handleCommnet = async (e) => {
     e.preventDefault();
+    const form = e.target;
     const comment = e.target.comment.value;
 
     const commnetInfo = {
@@ -78,7 +80,7 @@ const PostDetails = () => {
       postTitle: title,
       commenterEmail: user.email,
       commenterName: user.displayName,
-      userImage: "https://i.imgur.com/abc123.jpg",
+      userImage: user.photoURL,
       comment,
       createdAt: new Date(),
       reported: false,
@@ -87,16 +89,63 @@ const PostDetails = () => {
       reportStatus: "pending",
     };
 
-    // console.log(comment);
     try {
       const res = await axiosSecure.post("/comments", commnetInfo);
+
+      if (res.data?.success) {
+        Swal.fire({
+          title: "Success!",
+          text: res.data.message || "Comment has been added successfully.",
+          icon: "success",
+          confirmButtonText: "OK",
+          customClass: {
+            confirmButton: "text-white bg-[#129990] px-4 py-2 rounded",
+            popup: "text-[#129990]",
+          },
+          buttonsStyling: false,
+        });
+        form.reset();
+      } else {
+        // এমন কোনো কন্ডিশন যেটা success false পাঠায়
+        throw new Error(res.data.message || "Unexpected error");
+      }
     } catch (err) {
       Swal.fire({
         icon: "warning",
         title: "Already Commented!",
-        text: err?.response?.data?.message || "You can't comment twice.",
+        text:
+          err?.response?.data?.message ||
+          err.message ||
+          "You can't comment twice.",
       });
     }
+
+    // console.log(comment);
+    // try {
+    //   await axiosSecure.post("/comments", commnetInfo);
+    //   //   if (res) {
+    //   //     //success message
+    //   //     Swal.fire({
+    //   //       title: "Success!",
+    //   //       text: "Comment has been added successfully.",
+    //   //       icon: "success",
+    //   //       confirmButtonText: "OK",
+    //   //       customClass: {
+    //   //         confirmButton: "text-white bg-[#129990] px-4 py-2 rounded",
+    //   //         popup: "text-[#129990]",
+    //   //       },
+    //   //       buttonsStyling: false,
+    //   //     });
+    //   //   }
+    //   Swal.fire("Success", "Comment added successfully", "success");
+    //   reset();
+    // } catch (err) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "Already Commented!",
+    //     text: err?.response?.data?.message || "You can't comment twice.",
+    //   });
+    // }
   };
 
   return (

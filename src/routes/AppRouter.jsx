@@ -14,6 +14,7 @@ import MyPosts from "../pages/Dashboard/UserDashboard/MyPosts";
 import AdminProfile from "../pages/Dashboard/AdminDashboard/AdminProfile";
 import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers";
 import PostDetails from "../pages/PostDetails";
+import AddTag from "../pages/Dashboard/AdminDashboard/AddTag";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/manage-users",
         element: <ManageUsers />,
+      },
+      {
+        path: "/dashboard/add-tag",
+        element: <AddTag />,
       },
     ],
   },

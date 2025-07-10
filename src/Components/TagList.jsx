@@ -1,47 +1,47 @@
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
 import UseAxiosSecure from "../Hooks/UseAxiosSecure";
 import LoadingPage from "./LoadingPage";
 
-const TagList = () => {
-  const axiosSecur = UseAxiosSecure();
-  // const [tags, setTags] = useState([]);
+const TagList = ({ onTagSelect }) => {
+  const axiosSecure = UseAxiosSecure();
 
-  const { data: tags = {}, isLoading } = useQuery({
+  const {
+    data: tags = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["tags"],
     queryFn: async () => {
-      const res = await axiosSecur.get("/tags");
+      const res = await axiosSecure.get("/tags");
       return res.data;
     },
   });
-  // useEffect(() => {
-  //   // Initially you can use static tags or fetch from backend
-  //   fetch("https://your-server.com/tags")
-  //     .then((res) => res.json())
-  //     .then((data) => setTags(data))
-  //     .catch((err) => {
-  //       console.error("Failed to load tags", err);
-  //       setTags(["react", "node", "firebase", "mongodb", "auth", "dashboard"]); // fallback static
-  //     });
-  // }, []);
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  if (isLoading) return <LoadingPage />;
+
   return (
     <div className="py-8 max-w-6xl mx-auto px-4">
-      <h2 className="text-xl font-semibold mb-4 text-[#129990]">Browse Tags</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold text-[#129990]">Browse Tags</h2>
+        <button
+          onClick={refetch}
+          className="text-sm text-[#129990] underline hover:text-[#0e7f7f]"
+        >
+          Refresh Tags
+        </button>
+      </div>
 
       <div className="flex flex-wrap gap-3">
-        {/* {tags.map((tag, idx) => ( */}
-        <button
-          // key={idx}
-          // onClick={() => onTagSelect(tag)}
-          className="bg-[#129990]/10 text-[#129990] px-4 py-2 rounded-full hover:bg-[#129990]/20 transition"
-        >
-          #{tags.name}
-        </button>
-        {/* // ))} */}
+        {tags.map((tag) => (
+          <button
+            key={tag._id}
+            onClick={() => onTagSelect?.(tag.name)} // optional callback
+            className="bg-[#129990]/10 text-[#129990] px-4 py-2 rounded-full hover:bg-[#129990]/20 transition"
+          >
+            #{tag.name}
+          </button>
+        ))}
       </div>
     </div>
   );
