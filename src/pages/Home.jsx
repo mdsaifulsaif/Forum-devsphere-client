@@ -2,6 +2,7 @@ import React from "react";
 import Banner from "../Components/Banner";
 import TagList from "../Components/TagList";
 import PostCard from "../Components/PostCard";
+import AllPosts from "../Components/AllPosts";
 
 const dummyPost = {
   _id: "abc123",
@@ -22,9 +23,10 @@ function Home() {
   };
 
   return (
-    <div className="h-[800px]">
+    <div className="">
       <Banner onSearch={handleTagSearch} />
       {/* <TagList onTagSelect={handleTagSearch} /> */}
+      <AllPosts />
       <PostCard post={dummyPost} />
     </div>
   );
