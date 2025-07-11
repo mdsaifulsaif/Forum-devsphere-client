@@ -12,7 +12,7 @@ const MyProfile = () => {
   const { data: userData = {}, isLoading: userLoading } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users?email=${user.email}`);
+      const res = await axiosSecure.get(`/usersbyemail?email=${user.email}`);
       return res.data;
     },
     enabled: !!user?.email,
@@ -31,6 +31,7 @@ const MyProfile = () => {
     return <LoadingPage />;
   }
 
+  console.log(userData);
   return (
     <div className="max-w-3xl mx-auto bg-white p-6 rounded shadow">
       {/* User Info */}

@@ -2,9 +2,9 @@ import React from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import PayForm from "./PayForm";
 import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe("pk_test_6pRNASCoBOKtIshFeQd4XMUh");
-
+const ke =
+  "pk_test_51RjXU9JpCtTho2XJPhcExBLWDW2nvTjLnSEdMMvfETu1wkivQbvdVapandbF5DtNG58OGbRni9D5zDRowwM11mY700EFPJ0n3z";
+const stripePromise = loadStripe(ke);
 function Payment() {
   return (
     <Elements stripe={stripePromise}>

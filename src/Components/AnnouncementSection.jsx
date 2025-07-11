@@ -15,7 +15,7 @@ const AnnouncementSection = () => {
   if (!announcements.length) return null; // No announcement, don't show
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6 bg-[#129990]/5 rounded shadow">
+    <div className="max-w-6xl mx-auto px-4 py-6 bg-[#129990]/5 rounded shadow">
       <h2 className="text-xl font-semibold mb-4 text-[#129990]">
         📢 Announcements
       </h2>

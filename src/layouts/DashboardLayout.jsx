@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router";
-import { FaBars, FaTimes, FaUser, FaPlus, FaList } from "react-icons/fa";
+import {
+  FaBars,
+  FaTimes,
+  FaUser,
+  FaPlus,
+  FaList,
+  FaUserShield,
+  FaUsers,
+  FaBullhorn,
+  FaFlag,
+  FaTags,
+} from "react-icons/fa";
 import Logo from "../Components/Logo";
 import AdminSidebarLinks from "../Components/AdminSidebarLinks";
 
@@ -72,7 +83,86 @@ const DashboardLayout = () => {
             <span>My Posts</span>
           </NavLink>
 
-          <AdminSidebarLinks />
+          {/* <AdminSidebarLinks /> */}
+
+          <>
+            {/* Admin Profile */}
+            <NavLink
+              to="/dashboard/admin-profile"
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                  isActive
+                    ? "bg-[#129990] text-white"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`
+              }
+              onClick={() => setIsOpen(false)}
+            >
+              <FaUserShield />
+              <span>Admin Profile</span>
+            </NavLink>
+            {/* Manage Users */}
+            <NavLink
+              to="/dashboard/manage-users"
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                  isActive
+                    ? "bg-[#129990] text-white"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`
+              }
+              onClick={() => setIsOpen(false)}
+            >
+              <FaUsers />
+              <span>Manage Users</span>
+            </NavLink>
+            {/* Reported Comments */}
+            <NavLink
+              to="/dashboard/reported-comments"
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                  isActive
+                    ? "bg-[#129990] text-white"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`
+              }
+              onClick={() => setIsOpen(false)}
+            >
+              <FaFlag />
+              <span>Reported Activities</span>
+            </NavLink>
+            {/* Make Announcement */}
+            <NavLink
+              to="/dashboard/announcement"
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                  isActive
+                    ? "bg-[#129990] text-white"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`
+              }
+              onClick={() => setIsOpen(false)}
+            >
+              <FaBullhorn />
+              <span>Make Announcement</span>
+            </NavLink>
+            <NavLink
+              to="/dashboard/add-tag"
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                  isActive
+                    ? "bg-[#129990] text-white"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`
+              }
+              onClick={() => setIsOpen(false)}
+            >
+              <FaTags /> {/* Icon shown here */}
+              <span>Add Tag</span>
+            </NavLink>
+          </>
+
+          {/* ========================================  */}
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import LoadingPage from "../../../Components/LoadingPage";
 
 const feedbackOptions = [
   "Inappropriate Language",
@@ -57,11 +58,19 @@ const PostComments = () => {
     setShowModal(true);
   };
 
+  if (comments.length == 0) {
+    return (
+      <p className="text-gray-400 text-3xl text-center py-5">
+        No comment in this post{" "}
+      </p>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       <h2 className="text-xl font-bold text-[#129990] mb-4">All Comments</h2>
       {isLoading ? (
-        <p>Loading comments...</p>
+        <LoadingPage />
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border text-sm">

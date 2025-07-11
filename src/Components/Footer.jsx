@@ -7,7 +7,7 @@ import logo from "../assets/Images/logo.jpg"; // replace with your logo path
 const Footer = () => {
   return (
     <footer className="bg-[#0f172a] text-white pt-10 pb-4">
-      <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
         {/* Logo & Info */}
         <div>
           <Link to="/" className="flex items-center gap-2">

@@ -1,18 +1,25 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React from "react";
-import { useParams } from "react-router";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import LoadingPage from "../../Components/LoadingPage";
 import { useQuery } from "@tanstack/react-query";
 
 function PayForm() {
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const { id } = useParams();
   const axiosSecure = UseAxiosSecure();
+  const [err, setErr] = useState("");
 
-  const { isPending, isError, data, error } = useQuery({
+  const {
+    isPending,
+    isError,
+    data: userDAta,
+    error,
+  } = useQuery({
     queryKey: ["user", id],
     queryFn: async () => {
       const res = await axiosSecure(`/userbyid/${id}`);
@@ -34,23 +41,54 @@ function PayForm() {
     });
 
     if (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Payment Failed!",
-        text: error.message,
-        confirmButtonColor: "#d33",
-      });
+      setErr(error.message);
     } else {
-      Swal.fire({
-        icon: "success",
-        title: "Payment Successful!",
-        text: "Your membership has been activated.",
-        confirmButtonColor: "#129990", // your primary color
-      });
+      setErr("");
       console.log("[PaymentMethod]", paymentMethod);
     }
-  };
 
+    // send data to backend
+    // console.log(userDAta);
+    const amount = userDAta?.cost;
+    const amountCents = amount * 100;
+
+    const res = await axiosSecure.post("/create-payment-intent", {
+      amountCents,
+      userId: userDAta?._id,
+    });
+    const clientSecret = res.data.clientSecret;
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: "hsifsdf",
+        },
+      },
+    });
+
+    if (result.error) {
+      setErr(result.error.message);
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        // update user
+        // ✅ Update user collection in database
+        const transactionId = result.paymentIntent.id;
+        await axiosSecure.patch(`/users/payment-success/${userDAta?._id}`, {
+          transactionId,
+          badge: "Gold",
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Payment Successful!",
+          text: "Your membership has been activated.",
+          confirmButtonColor: "#129990", // your primary color
+        });
+        navigate("/dashboard/addpost");
+      }
+    }
+  };
+  console.log(userDAta);
   if (isPending) {
     return <LoadingPage />;
   }
@@ -86,8 +124,9 @@ function PayForm() {
           disabled={!stripe}
           className="w-full bg-[#129990] text-white py-2 px-4 rounded hover:bg-[#0e7f7f] transition"
         >
-          Pay ${data.cost}
+          Pay ${userDAta?.cost}
         </button>
+        <p className="text-red-500 pt-5 text-sm">{err}</p>
       </form>
     </div>
   );
