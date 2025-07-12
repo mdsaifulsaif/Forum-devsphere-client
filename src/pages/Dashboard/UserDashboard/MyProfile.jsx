@@ -31,9 +31,8 @@ const MyProfile = () => {
     return <LoadingPage />;
   }
 
-  console.log(userData);
   return (
-    <div className="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+    <div className="max-w-6xl mx-auto bg-white p-6 rounded shadow">
       {/* User Info */}
       <div className="flex items-center gap-4 mb-6">
         {user?.photoURL ? (

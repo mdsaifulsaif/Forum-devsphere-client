@@ -19,6 +19,8 @@ import MakeAnnouncement from "../pages/Dashboard/AdminDashboard/MakeAnnouncement
 import PostComments from "../pages/Dashboard/UserDashboard/PostComments";
 import ReportedComments from "../pages/Dashboard/AdminDashboard/ReportedComments";
 import Payment from "../pages/Payment/Payment";
+import PrivateRouteAdmin from "../PrivetRouts/PrivetRoutesforAdmin/PrivateRouteAdmin";
+import ForbiddenPage from "../Components/ForbiddenPage";
 
 export const router = createBrowserRouter([
   {
@@ -43,7 +45,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/payment/:id",
-        element: <Payment />,
+        element: (
+          <PrivetRouteUser>
+            <Payment />
+          </PrivetRouteUser>
+        ),
       },
     ],
   },
@@ -60,10 +66,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/addpost",
         element: <AddPost />,
       },
-      // {
-      //   path: "/dashboard/payment/:id",
-      //   element: <Payment />,
-      // },
+
       {
         path: "/dashboard/My-profile",
         element: <MyProfile />,
@@ -78,7 +81,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/admin-profile",
-        element: <AdminProfile />,
+        // element: <AdminProfile />,
+        element: (
+          <PrivateRouteAdmin>
+            <AdminProfile />
+          </PrivateRouteAdmin>
+        ),
       },
       {
         path: "/dashboard/manage-users",
@@ -98,10 +106,8 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/forbidden",
+    Component: ForbiddenPage,
+  },
 ]);
-
-// const root = document.getElementById("root");
-
-// ReactDOM.createRoot(root).render(
-//   <RouterProvider router={router} />
-// );

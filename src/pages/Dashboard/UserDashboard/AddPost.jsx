@@ -58,10 +58,12 @@ const AddPost = () => {
     enabled: !!user?.email,
   });
 
+  console.log(userInfo);
+
   const isMember = !!userInfo.isMember;
   const postCount = userPosts.length;
 
-  console.log("user info form databse", userInfo);
+  // console.log("user info form databse", userInfo);
 
   // ✅ Post Submission
   const onSubmit = async (data) => {
