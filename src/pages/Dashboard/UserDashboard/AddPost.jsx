@@ -112,7 +112,7 @@ const AddPost = () => {
         </h2>
         <p className="mb-4">You can only post 5 times without membership.</p>
         <Link
-          to={`/dashboard/payment/${userInfo._id}`}
+          to={`/payment/${userInfo._id}`}
           href="/membership"
           className="bg-[#129990] text-white px-5 py-2 rounded hover:bg-[#0e7f7f]"
         >

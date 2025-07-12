@@ -41,6 +41,10 @@ export const router = createBrowserRouter([
         path: "/post/:id",
         Component: PostDetails,
       },
+      {
+        path: "/payment/:id",
+        element: <Payment />,
+      },
     ],
   },
   {
@@ -56,10 +60,10 @@ export const router = createBrowserRouter([
         path: "/dashboard/addpost",
         element: <AddPost />,
       },
-      {
-        path: "/dashboard/payment/:id",
-        element: <Payment />,
-      },
+      // {
+      //   path: "/dashboard/payment/:id",
+      //   element: <Payment />,
+      // },
       {
         path: "/dashboard/My-profile",
         element: <MyProfile />,

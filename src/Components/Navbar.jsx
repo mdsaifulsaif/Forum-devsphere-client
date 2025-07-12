@@ -7,9 +7,12 @@ import NotificationIcon from "./NotificationIcon";
 import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "./LoadingPage";
 import axios from "axios";
+import UseAxiosSecure from "../Hooks/UseAxiosSecure";
+import useUserRole from "../Hooks/useUserRole";
 
 const Navbar = () => {
-  const axiosSecure = use(AuthContext);
+  const axiosSecure = UseAxiosSecure();
+  const { role } = useUserRole();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false); // ✅ new state
   const { user, LogoutUser } = useContext(AuthContext);
@@ -18,15 +21,14 @@ const Navbar = () => {
   const { isLoading: userlod, data: userInfo = {} } = useQuery({
     queryKey: ["userInfo", user?.email],
     queryFn: async () => {
-      const res = await axios.get(
-        `http://localhost:3000/usersbyemail?email=${user?.email}`
-      );
+      const res = await axiosSecure.get(`/usersbyemail?email=${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email,
   });
 
-  // console.log("Navbar user data", UserByEmail);
+  console.log("Navbar user data", userInfo);
+  console.log("user role ", role);
 
   const handleLogout = () => {
     LogoutUser();
@@ -36,7 +38,7 @@ const Navbar = () => {
     <LoadingPage />;
   }
 
-  console.log("nabvar user data ", userInfo);
+  console.log("nabvar user data ");
   const navLinks = (
     <>
       <li>
@@ -45,7 +47,10 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/membership" className="hover:text-[#129990]">
+        <NavLink
+          to={`/payment/${userInfo._id}`}
+          className="hover:text-[#129990]"
+        >
           Membership
         </NavLink>
       </li>

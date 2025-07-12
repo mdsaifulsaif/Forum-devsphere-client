@@ -7,9 +7,11 @@ const ke =
 const stripePromise = loadStripe(ke);
 function Payment() {
   return (
-    <Elements stripe={stripePromise}>
-      <PayForm></PayForm>
-    </Elements>
+    <div className="min-h-[70vh] py-5">
+      <Elements stripe={stripePromise}>
+        <PayForm></PayForm>
+      </Elements>
+    </div>
   );
 }
 
