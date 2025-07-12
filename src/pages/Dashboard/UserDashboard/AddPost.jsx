@@ -108,7 +108,7 @@ const AddPost = () => {
   // ✅ Limit check for non-member
   if (!isMember && postCount >= 5) {
     return (
-      <div className="text-center py-16">
+      <div className="text-center  py-16">
         <h2 className="text-xl font-semibold text-red-500 mb-4">
           Post Limit Reached!
         </h2>
@@ -125,7 +125,7 @@ const AddPost = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow">
+    <div className="max-w-6xl mx-auto p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold text-[#129990] mb-6">Add New Post</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

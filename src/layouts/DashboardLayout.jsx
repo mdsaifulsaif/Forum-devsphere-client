@@ -110,20 +110,6 @@ const DashboardLayout = () => {
                 <FaBullhorn />
                 <span>Make Announcement</span>
               </NavLink>
-              <NavLink
-                to="/dashboard/add-tag"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg transition ${
-                    isActive
-                      ? "bg-[#129990] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`
-                }
-                onClick={() => setIsOpen(false)}
-              >
-                <FaTags /> {/* Icon shown here */}
-                <span>Add Tag</span>
-              </NavLink>
             </>
           ) : (
             <>

@@ -36,7 +36,14 @@ const ManageUsers = () => {
       return res.data;
     },
     onSuccess: () => {
-      Swal.fire("Updated!", "User role changed successfully.", "success");
+      Swal.fire({
+        title: "Updated!",
+        text: "User role changed successfully.",
+        icon: "success",
+        confirmButtonColor: "#129990",
+        background: "#f9f9f9", // light background
+        color: "#333", // text color
+      });
       queryClient.invalidateQueries(["users", debouncedSearch]);
     },
     onError: () => {
