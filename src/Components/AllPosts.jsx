@@ -2,29 +2,39 @@ import React, { use, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaRegCommentDots, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { Link } from "react-router";
-// import UseAxiosSecure from "../Hooks/UseAxiosSecure";
-import LoadingPage from "./LoadingPage";
 import Swal from "sweetalert2";
-import { AuthContext } from "../context/AuthContext/AuthContext";
 import UseAxiosSecure from "../Hooks/UseAxiosSecure";
+import LoadingPage from "./LoadingPage";
+import { AuthContext } from "./../context/AuthContext/AuthContext";
 
 const AllPosts = () => {
   const axiosSecure = UseAxiosSecure();
   const { user } = use(AuthContext);
   const queryClient = useQueryClient();
-  const [sortBy, setSortBy] = useState("newest");
 
-  // fetch all posts
-  const { data: posts = [], isLoading } = useQuery({
-    queryKey: ["posts", sortBy],
+  const [page, setPage] = useState(1);
+  const [sortBy, setSortBy] = useState("newest");
+  const postsPerPage = 5;
+
+  // fetch paginated posts
+
+  const { data: postsData = { posts: [], total: 0 }, isLoading } = useQuery({
+    queryKey: ["posts", sortBy, page],
     queryFn: async () => {
-      const endpoint = sortBy === "popular" ? "/posts/popular" : "/posts";
-      const res = await axiosSecure.get(endpoint, { withCredentials: true });
+      const endpoint =
+        sortBy === "popular" ? "/posts/popular" : "/posts/paginated";
+      const res = await axiosSecure.get(endpoint, {
+        params: { page, limit: 5 },
+      });
       return res.data;
     },
   });
 
-  // fetch user's previous votes
+  const posts = postsData.posts || [];
+  const totalPosts = postsData.total || 0;
+  const totalPages = Math.ceil(totalPosts / postsPerPage);
+
+  // fetch user's votes
   const { data: userVotes = [] } = useQuery({
     queryKey: ["userVotes", user?.email],
     enabled: !!user?.email,
@@ -63,7 +73,6 @@ const AllPosts = () => {
     },
   });
 
-  // handle vote action
   const handleVote = (postId, type) => {
     if (!user) {
       Swal.fire({
@@ -142,10 +151,9 @@ const AllPosts = () => {
                 </span>
               </div>
 
-              {/* Footer: Votes, Comments */}
+              {/* Footer: Vote + Comment */}
               <div className="flex justify-between items-center text-sm mt-2">
                 <div className="flex items-center gap-3">
-                  {/* Upvote */}
                   <div
                     className={`flex items-center gap-1 cursor-pointer ${
                       userVote?.type === "up"
@@ -158,7 +166,6 @@ const AllPosts = () => {
                     <span>{upVote}</span>
                   </div>
 
-                  {/* Downvote */}
                   <div
                     className={`flex items-center gap-1 cursor-pointer ${
                       userVote?.type === "down"
@@ -171,7 +178,6 @@ const AllPosts = () => {
                     <span>{downVote}</span>
                   </div>
 
-                  {/* Comments */}
                   <div className="flex items-center gap-1 text-gray-600">
                     <FaRegCommentDots />
                     <span>{commentsCount}</span>
@@ -188,6 +194,23 @@ const AllPosts = () => {
             </div>
           );
         })}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-6 gap-2">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => setPage(i + 1)}
+            className={`px-3 py-1 rounded ${
+              page === i + 1
+                ? "bg-[#129990] text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
       </div>
     </div>
   );

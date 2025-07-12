@@ -1,19 +1,42 @@
-import React, { useContext, useState } from "react";
+import React, { use, useContext, useState } from "react";
 import { Link, NavLink } from "react-router"; // ✅ fix router import
 import { FaBars, FaBell, FaTimes } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext/AuthContext";
 import Logo from "./Logo";
 import NotificationIcon from "./NotificationIcon";
+import { useQuery } from "@tanstack/react-query";
+import LoadingPage from "./LoadingPage";
+import axios from "axios";
 
 const Navbar = () => {
+  const axiosSecure = use(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false); // ✅ new state
   const { user, LogoutUser } = useContext(AuthContext);
+
+  // ✅ Fetch user info
+  const { isLoading: userlod, data: userInfo = {} } = useQuery({
+    queryKey: ["userInfo", user?.email],
+    queryFn: async () => {
+      const res = await axios.get(
+        `http://localhost:3000/usersbyemail?email=${user?.email}`
+      );
+      return res.data;
+    },
+    enabled: !!user?.email,
+  });
+
+  // console.log("Navbar user data", UserByEmail);
 
   const handleLogout = () => {
     LogoutUser();
   };
 
+  if (userlod) {
+    <LoadingPage />;
+  }
+
+  console.log("nabvar user data ", userInfo);
   const navLinks = (
     <>
       <li>
