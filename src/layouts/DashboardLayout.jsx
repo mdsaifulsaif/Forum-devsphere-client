@@ -164,14 +164,16 @@ const DashboardLayout = () => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-4 relative">
+      <div className="flex-1 p-4  relative">
         {/* Mobile Hamburger */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-2xl absolute top-4 left-4 z-40 bg-white shadow-md p-2 rounded-full"
-        >
-          <FaBars />
-        </button>
+        <div className="mb-15">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden text-2xl absolute top-4 left-4 z-40 bg-white shadow-md p-2 rounded-full"
+          >
+            <FaBars />
+          </button>
+        </div>
 
         <Outlet />
       </div>
