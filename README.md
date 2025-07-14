@@ -1,10 +1,10 @@
 Live : https://devsphere-ph.netlify.app/
 
-- Client-Side Overview (Frontend)
+# Client-Side Overview (Frontend)
 
 This is the client-side of a modern Forum web application developed using the MERN stack. The frontend is built with React, focusing on user experience, dynamic content, and clean design. It connects seamlessly with the backend to allow users to post, comment, upvote/downvote, and subscribe for membership.
 
-- Technologies & Libraries Used
+# Technologies & Libraries Used
 
 | Tech / Library             | Purpose                                                         |
 | -------------------------- | --------------------------------------------------------------- |
@@ -21,7 +21,7 @@ This is the client-side of a modern Forum web application developed using the ME
 | **JWT Cookie Auth**        | Secure authentication using cookies from backend                |
 | **Stripe (React)**         | Payment integration for membership using secure checkout system |
 
-- Features Implemented
+# Features Implemented
 
 - User Authentication
 
@@ -67,7 +67,7 @@ Tailwind CSS + DaisyUI
 
 Mobile-first, clean layout
 
-- Admin can:
+# Admin can:
 
 Monitor abuse and inappropriate comments.
 
@@ -75,7 +75,7 @@ Mark a comment report as resolved.
 
 Delete harmful comments to maintain community safety.
 
-- Pages Overview
+# Pages Overview
 
 | Path                     | Description                            |
 | ------------------------ | -------------------------------------- |
