@@ -62,7 +62,6 @@ const Navbar = () => {
         <ul className="hidden md:flex items-center space-x-6 font-medium">
           {navLinks}
           <li>
-            {/* <FaBell className="text-lg hover:text-[#129990]" /> */}
             <NotificationIcon />
           </li>
           {user ? (
@@ -112,7 +111,8 @@ const Navbar = () => {
         </ul>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center justify-center gap-5">
+          <NotificationIcon />
           <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? (
               <FaTimes className="text-xl" />
@@ -128,9 +128,9 @@ const Navbar = () => {
         <div className="md:hidden px-4 pb-4">
           <ul className="space-y-3 font-medium">
             {navLinks}
-            <li>
+            {/* <li>
               <FaBell className="inline mr-2" /> Notifications
-            </li>
+            </li> */}
             {user ? (
               <>
                 <li className="font-semibold">{user.displayName}</li>
