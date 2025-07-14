@@ -24,7 +24,6 @@ const DashboardLayout = () => {
   if (isLoading) {
     return <LoadingPage />;
   }
-  console.log(role);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gray-50">

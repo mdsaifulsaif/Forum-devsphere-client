@@ -50,15 +50,13 @@ const AddPost = () => {
   const { isLoading: userlod, data: userInfo = {} } = useQuery({
     queryKey: ["userInfo", user?.email],
     queryFn: async () => {
-      const res = await axios.get(
-        `http://localhost:3000/usersbyemail?email=${user?.email}`
-      );
+      const res = await axiosSecure.get(`/usersbyemail?email=${user?.email}`, {
+        withCredentials: true,
+      });
       return res.data;
     },
     enabled: !!user?.email,
   });
-
-  console.log(userInfo);
 
   const isMember = !!userInfo.isMember;
   const postCount = userPosts.length;
@@ -78,7 +76,7 @@ const AddPost = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:3000/posts", postData);
+      const res = await axiosSecure.post("/posts", postData);
 
       if (res.data.insertedId) {
         // reset();
@@ -151,7 +149,7 @@ const AddPost = () => {
         )}
 
         {/* Tags */}
-        <select
+        {/* <select
           {...register("tags", { required: true })}
           className="w-full border p-2 rounded"
         >
@@ -161,7 +159,21 @@ const AddPost = () => {
               {tag.name}
             </option>
           ))}
-        </select>
+        </select> */}
+        <div className="relative overflow-visible">
+          <select
+            {...register("tags", { required: true })}
+            className="w-full border border-gray-300 p-2 rounded text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-[#129990] transition duration-200"
+          >
+            <option value="">Select a tag</option>
+            {tags.map((tag, i) => (
+              <option key={i} value={tag.name}>
+                {tag.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {errors.tags && <p className="text-red-500 text-sm">Tag is required</p>}
 
         {/* Submit */}

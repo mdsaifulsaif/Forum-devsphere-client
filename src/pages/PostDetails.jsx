@@ -67,7 +67,6 @@ const PostDetails = () => {
     upVote,
     downVote,
   } = post || {};
-  console.log(user);
 
   //   coment data send to backend
   const handleCommnet = async (e) => {

@@ -24,7 +24,9 @@ const ManageUsers = () => {
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["users", debouncedSearch],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users?search=${debouncedSearch}`);
+      const res = await axiosSecure.get(`/users?search=${debouncedSearch}`, {
+        withCredentials: true,
+      });
       return res.data;
     },
   });

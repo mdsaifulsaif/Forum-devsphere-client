@@ -4,6 +4,7 @@ import { AuthContext } from "../../../context/AuthContext/AuthContext";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import { FaUserCircle } from "react-icons/fa";
 import LoadingPage from "../../../Components/LoadingPage";
+import { Link } from "react-router";
 
 const MyProfile = () => {
   const { user, loading } = useContext(AuthContext);
@@ -65,7 +66,7 @@ const MyProfile = () => {
       </div>
 
       {/* Latest Posts */}
-      <div>
+      {/* <div>
         <h3 className="text-lg font-semibold mb-3 text-[#129990]">
           Your Recent Posts
         </h3>
@@ -82,6 +83,50 @@ const MyProfile = () => {
               <p className="text-sm mt-1">Tag: {post.tags}</p>
             </div>
           ))
+        ) : (
+          <p className="text-sm text-gray-500">
+            You haven't posted anything yet.
+          </p>
+        )}
+      </div> */}
+      <div className="overflow-x-auto">
+        <h3 className="text-lg font-semibold mb-3 text-[#129990]">
+          Your Recent Posts
+        </h3>
+
+        {posts.length > 0 ? (
+          <table className="min-w-full bg-white border border-gray-200 rounded">
+            <thead className="bg-[#129990] text-white">
+              <tr>
+                <th className="py-2 px-4 text-left">Title</th>
+                <th className="py-2 px-4 text-left">Tag</th>
+                <th className="py-2 px-4 text-left">Created At</th>
+                <th className="py-2 px-4 text-center">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {posts.slice(0, 3).map((post) => (
+                <tr
+                  key={post._id}
+                  className="border-b hover:bg-gray-50 transition duration-150"
+                >
+                  <td className="py-2 px-4">{post.title}</td>
+                  <td className="py-2 px-4">{post.tags}</td>
+                  <td className="py-2 px-4">
+                    {new Date(post.createdAt).toLocaleString()}
+                  </td>
+                  <td className="py-2 px-4 text-center">
+                    <Link
+                      to={`/post/${post._id}`}
+                      className="bg-[#129990] text-white px-3 py-1 rounded hover:bg-[#0f7f7f] text-sm"
+                    >
+                      View
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
           <p className="text-sm text-gray-500">
             You haven't posted anything yet.

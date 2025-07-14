@@ -11,8 +11,10 @@ import {
 } from "firebase/auth";
 import { auth } from "../../firebase/Firebase";
 import axios from "axios";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 
 function AuthProvider({ children }) {
+  const axiosSecure = UseAxiosSecure();
   const provider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
   const [userLoadding, setuserLoadding] = useState(true);
@@ -45,19 +47,19 @@ function AuthProvider({ children }) {
       setUser(currentUser);
       setuserLoadding(false);
 
-      if (currentUser?.email) {
-        const userData = { email: currentUser.email };
-        axios
-          .post("http://localhost:3000/jwt", userData, {
-            withCredentials: true,
-          })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      // if (currentUser?.email) {
+      //   const userData = { email: currentUser.email };
+      //   axiosSecure
+      //     .post("/jwt", userData, {
+      //       withCredentials: true,
+      //     })
+      //     .then((res) => {
+      //       console.log(res);
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //     });
+      // }
     });
 
     return () => {

@@ -7,8 +7,10 @@ import signupAnimation from "../../assets/Animations/Animation - auth.json";
 import { AuthContext } from "../../context/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 import axios from "axios";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 
 const Register = () => {
+  const axiosSecure = UseAxiosSecure();
   const {
     createUserEmailPassword,
     updateUser,
@@ -45,8 +47,8 @@ const Register = () => {
           cost: 10,
           createdAt: new Date(),
         };
-        axios
-          .post("http://localhost:3000/users", saveUser)
+        axiosSecure
+          .post("/users", saveUser)
           .then((res) => {
             console.log("User saved to DB:", res.data);
           })
@@ -112,8 +114,8 @@ const Register = () => {
             createdAt: new Date(),
           };
 
-          axios
-            .post("http://localhost:3000/users", saveUser)
+          axiosSecure
+            .post("/users", saveUser)
             .then((res) => {
               console.log("User saved to DB:", res.data);
             })

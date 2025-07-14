@@ -8,7 +8,7 @@ function Logo() {
       {/* Logo */}
       <Link to="/" className="flex items-center gap-2">
         <img src={logo} alt="Logo" className="w-8 h-8" />
-        <span className="text-xl font-semibold text-[#129990]">Forum</span>
+        <span className="text-xl font-semibold text-[#129990]">DevSphere</span>
       </Link>
     </div>
   );

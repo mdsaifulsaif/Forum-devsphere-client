@@ -27,9 +27,6 @@ const Navbar = () => {
     enabled: !!user?.email,
   });
 
-  console.log("Navbar user data", userInfo);
-  console.log("user role ", role);
-
   const handleLogout = () => {
     LogoutUser();
   };
@@ -38,7 +35,6 @@ const Navbar = () => {
     <LoadingPage />;
   }
 
-  console.log("nabvar user data ");
   const navLinks = (
     <>
       <li>

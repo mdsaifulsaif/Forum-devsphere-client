@@ -52,10 +52,32 @@ const Login = () => {
     // TODO: Firebase Email/Password login here
   };
 
+  // crate user use google
   const handleGoogleLogin = () => {
     createUserUseGoogl()
       .then((res) => {
         if (res.user) {
+          // send user data to backend
+          const saveUser = {
+            name: res.user.displayName,
+            email: res.user.email,
+            role: "user",
+            badge: "bronze",
+            isMember: false,
+            cost: 10,
+            createdAt: new Date(),
+          };
+
+          axiosSecure
+            .post("/users", saveUser)
+            .then((res) => {
+              console.log("User saved to DB:", res.data);
+            })
+            .catch((err) => {
+              console.error("User save error:", err);
+            });
+
+          //success message
           Swal.fire({
             title: "Success!",
             text: "User has been login successfully.",
@@ -68,6 +90,7 @@ const Login = () => {
             buttonsStyling: false,
           });
         }
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire({
@@ -83,6 +106,38 @@ const Login = () => {
         });
       });
   };
+
+  // const handleGoogleLogin = () => {
+  //   createUserUseGoogl()
+  //     .then((res) => {
+  //       if (res.user) {
+  //         Swal.fire({
+  //           title: "Success!",
+  //           text: "User has been login successfully.",
+  //           icon: "success",
+  //           confirmButtonText: "OK",
+  //           customClass: {
+  //             confirmButton: "text-white bg-[#129990] px-4 py-2 rounded",
+  //             popup: "text-[#129990]",
+  //           },
+  //           buttonsStyling: false,
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       Swal.fire({
+  //         title: "Error!",
+  //         text: error.message || "Failed to create user.",
+  //         icon: "error",
+  //         confirmButtonText: "Close",
+  //         customClass: {
+  //           confirmButton: "text-white bg-[#129990] px-4 py-2 rounded",
+  //           popup: "text-[#129990]",
+  //         },
+  //         buttonsStyling: false,
+  //       });
+  //     });
+  // };
 
   return (
     <div className="min-h-screen grid md:grid-cols-2 items-center bg-gray-50 px-4">

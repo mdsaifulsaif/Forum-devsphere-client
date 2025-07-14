@@ -12,7 +12,9 @@ const Footer = () => {
         <div>
           <Link to="/" className="flex items-center gap-2">
             <img src={logo} alt="Logo" className="w-8 h-8" />
-            <span className="text-xl font-semibold text-[#129990]">Forum</span>
+            <span className="text-xl font-semibold text-[#129990]">
+              DevSphere
+            </span>
           </Link>
           <p className="mt-4 text-sm text-gray-300">
             Empowering discussion and knowledge sharing through a modern forum
@@ -31,11 +33,7 @@ const Footer = () => {
                 Home
               </Link>
             </li>
-            <li>
-              <Link to="/membership" className="hover:text-white">
-                Membership
-              </Link>
-            </li>
+
             <li>
               <Link to="/join" className="hover:text-white">
                 Join Us
@@ -55,7 +53,7 @@ const Footer = () => {
           <div className="flex items-center gap-3 text-gray-300 mb-2">
             <MdEmail className="text-xl" />
             <a href="mailto:yourmail@example.com" className="hover:text-white">
-              yourmail@example.com
+              devsphere@gmail.com
             </a>
           </div>
           <div className="flex items-center gap-3 text-gray-300 mb-4">
@@ -66,7 +64,7 @@ const Footer = () => {
               rel="noreferrer"
               className="hover:text-white"
             >
-              +8801XXXXXXXXX
+              +8801727841555
             </a>
           </div>
 

@@ -20,6 +20,7 @@ import ReportedComments from "../pages/Dashboard/AdminDashboard/ReportedComments
 import Payment from "../pages/Payment/Payment";
 import PrivateRouteAdmin from "../PrivetRouts/PrivetRoutesforAdmin/PrivateRouteAdmin";
 import ForbiddenPage from "../Components/ForbiddenPage";
+import DashboardRedirect from "../Components/DashboardRedirect";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
     ),
 
     children: [
+      {
+        index: true,
+        Component: DashboardRedirect,
+      },
       {
         path: "/dashboard/addpost",
         element: <AddPost />,
