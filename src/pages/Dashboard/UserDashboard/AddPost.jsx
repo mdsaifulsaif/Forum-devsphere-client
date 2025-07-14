@@ -1,13 +1,12 @@
-import React from "react";
-import axios from "axios";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import Select from "react-select";
 import Swal from "sweetalert2";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { AuthContext } from "../../../context/AuthContext/AuthContext";
-import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
-import { useContext } from "react";
-import LoadingPage from "../../../Components/LoadingPage";
 import { Link } from "react-router";
+import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import { AuthContext } from "../../../context/AuthContext/AuthContext";
+import LoadingPage from "../../../Components/LoadingPage";
 
 const AddPost = () => {
   const axiosSecure = UseAxiosSecure();
@@ -18,10 +17,11 @@ const AddPost = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
 
-  // ✅ Fetch tags
+  // Fetch tags
   const { data: tags = [] } = useQuery({
     queryKey: ["tags"],
     queryFn: async () => {
@@ -30,43 +30,35 @@ const AddPost = () => {
     },
   });
 
-  // ✅ Fetch posts by user email
-  const {
-    isLoading,
-    data: userPosts = [],
-    refetch: refetchPosts,
-  } = useQuery({
+  // Fetch user's post count
+  const { isLoading: postLoading, data: userPosts = [] } = useQuery({
     queryKey: ["posts", user?.email],
     queryFn: async () => {
-      const res = await axios.get(
-        `https://forum-server-psi.vercel.app/postsbyuser?email=${user?.email}`
-      );
+      const res = await axiosSecure.get(`/postsbyuser?email=${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email,
   });
 
-  // ✅ Fetch user info
-  const { isLoading: userlod, data: userInfo = {} } = useQuery({
+  // Fetch user info
+  const { isLoading: userInfoLoading, data: userInfo = {} } = useQuery({
     queryKey: ["userInfo", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/usersbyemail?email=${user?.email}`, {
-        withCredentials: true,
-      });
+      const res = await axiosSecure.get(`/usersbyemail?email=${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email,
   });
 
-  const isMember = !!userInfo.isMember;
+  const isMember = userInfo?.isMember || false;
   const postCount = userPosts.length;
 
-  // console.log("user info form databse", userInfo);
-
-  // ✅ Post Submission
+  // Handle form submission
   const onSubmit = async (data) => {
     const postData = {
-      ...data,
+      title: data.title,
+      description: data.description,
+      tags: data.tags.value,
       authorName: user.displayName,
       authorEmail: user.email,
       authorImage: user.photoURL,
@@ -77,17 +69,15 @@ const AddPost = () => {
 
     try {
       const res = await axiosSecure.post("/posts", postData);
-
       if (res.data.insertedId) {
-        // reset();
         await Swal.fire({
           icon: "success",
           title: "Post Added!",
           text: "Your post has been successfully submitted.",
           confirmButtonColor: "#129990",
         });
-
-        queryClient.invalidateQueries(["posts", user?.email]); // 🔁 Refresh post count
+        queryClient.invalidateQueries(["posts", user?.email]);
+        reset();
       }
     } catch (err) {
       await Swal.fire({
@@ -99,21 +89,18 @@ const AddPost = () => {
     }
   };
 
-  if (isLoading && userlod) {
-    return <LoadingPage />;
-  }
+  if (postLoading || userInfoLoading) return <LoadingPage />;
 
-  // ✅ Limit check for non-member
+  // Block non-members after 5 posts
   if (!isMember && postCount >= 5) {
     return (
-      <div className="text-center  py-16">
+      <div className="text-center py-16">
         <h2 className="text-xl font-semibold text-red-500 mb-4">
           Post Limit Reached!
         </h2>
         <p className="mb-4">You can only post 5 times without membership.</p>
         <Link
           to={`/payment/${userInfo._id}`}
-          href="/membership"
           className="bg-[#129990] text-white px-5 py-2 rounded hover:bg-[#0e7f7f]"
         >
           Become a Member
@@ -123,58 +110,82 @@ const AddPost = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white rounded shadow">
+    <div className="max-w-5xl mx-auto p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold text-[#129990] mb-6">Add New Post</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Title */}
-        <input
-          {...register("title", { required: true })}
-          placeholder="Post Title"
-          className="w-full border p-2 rounded"
-        />
-        {errors.title && (
-          <p className="text-red-500 text-sm">Title is required</p>
-        )}
-
-        {/* Description */}
-        <textarea
-          {...register("description", { required: true })}
-          placeholder="Post Description"
-          rows="4"
-          className="w-full border p-2 rounded"
-        ></textarea>
-        {errors.description && (
-          <p className="text-red-500 text-sm">Description is required</p>
-        )}
-
-        {/* Tags */}
-        {/* <select
-          {...register("tags", { required: true })}
-          className="w-full border p-2 rounded"
-        >
-          <option value="">Select a tag</option>
-          {tags.map((tag, i) => (
-            <option key={i} value={tag.name}>
-              {tag.name}
-            </option>
-          ))}
-        </select> */}
-        <div className="relative overflow-visible">
-          <select
-            {...register("tags", { required: true })}
-            className="w-full border border-gray-300 p-2 rounded text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-[#129990] transition duration-200"
-          >
-            <option value="">Select a tag</option>
-            {tags.map((tag, i) => (
-              <option key={i} value={tag.name}>
-                {tag.name}
-              </option>
-            ))}
-          </select>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        {/* Author Photo URL */}
+        <div>
+          <input
+            type="text"
+            value={user?.photoURL || ""}
+            readOnly
+            className="w-full border p-2 rounded bg-gray-100"
+            placeholder="Author Image URL"
+          />
+        </div>
+        {/* Author Name */}
+        <div>
+          <input
+            type="text"
+            value={user?.displayName || ""}
+            readOnly
+            className="w-full border p-2 rounded bg-gray-100"
+            placeholder="Author Name"
+          />
         </div>
 
-        {errors.tags && <p className="text-red-500 text-sm">Tag is required</p>}
+        {/* Author Email */}
+        <div>
+          <input
+            type="email"
+            value={user?.email || ""}
+            readOnly
+            className="w-full border p-2 rounded bg-gray-100"
+            placeholder="Author Email"
+          />
+        </div>
+
+        {/* Title */}
+        <div>
+          <input
+            {...register("title", { required: true })}
+            placeholder="Post Title"
+            className="w-full border p-2 rounded"
+          />
+          {errors.title && (
+            <p className="text-red-500 text-sm">Title is required</p>
+          )}
+        </div>
+
+        {/* Description */}
+        <div>
+          <textarea
+            {...register("description", { required: true })}
+            placeholder="Post Description"
+            rows="4"
+            className="w-full border p-2 rounded"
+          ></textarea>
+          {errors.description && (
+            <p className="text-red-500 text-sm">Description is required</p>
+          )}
+        </div>
+
+        {/* Tags - React Select */}
+        <div>
+          <Select
+            options={tags.map((tag) => ({
+              value: tag.name,
+              label: tag.name,
+            }))}
+            onChange={(selected) => setValue("tags", selected)}
+            placeholder="Select a tag"
+            className="text-sm md:text-base"
+          />
+          {errors.tags && (
+            <p className="text-red-500 text-sm">Tag selection is required</p>
+          )}
+        </div>
 
         {/* Submit */}
         <input

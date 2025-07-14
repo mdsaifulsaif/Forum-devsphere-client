@@ -93,7 +93,7 @@ function PayForm() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md border">
+    <div className="w-md  bg-white  mx-auto p-6  rounded-lg shadow-md border">
       <h2 className="text-2xl font-semibold text-[#129990] mb-4 text-center">
         Pay for Membership
       </h2>

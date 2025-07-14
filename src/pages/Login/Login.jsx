@@ -1,13 +1,16 @@
 import React, { use } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext/AuthContext";
 import loginAnimation from "../../assets/Animations/Animation - auth.json";
 import Swal from "sweetalert2";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 
 const Login = () => {
+  const axiosSecure = UseAxiosSecure();
+  const navigate = useNavigate();
   const { LoginUserEmailPassword, createUserUseGoogl } = use(AuthContext);
   const {
     register,

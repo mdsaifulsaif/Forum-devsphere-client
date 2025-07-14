@@ -128,12 +128,9 @@ const Navbar = () => {
         <div className="md:hidden px-4 pb-4">
           <ul className="space-y-3 font-medium">
             {navLinks}
-            {/* <li>
-              <FaBell className="inline mr-2" /> Notifications
-            </li> */}
+
             {user ? (
               <>
-                <li className="font-semibold">{user.displayName}</li>
                 <li>
                   <Link to="/dashboard">Dashboard</Link>
                 </li>
