@@ -23,13 +23,13 @@ This is the client-side of a modern Forum web application developed using the ME
 
 - Features Implemented
 
-# User Authentication
+- User Authentication
 
 Login with Google
 
 JWT token-based auth with cookie support
 
-# Forum Posting System
+- Forum Posting System
 
 Create post (with title, description, tag)
 
@@ -37,19 +37,19 @@ Limit: 5 posts for non-members
 
 Membership unlocks unlimited posting
 
-# Upvote / Downvote System
+- Upvote / Downvote System
 
 React Query-based vote actions
 
 Separate votes collection for scalability
 
-# Dynamic Dashboard
+- Dynamic Dashboard
 
 User Dashboard: Profile, post list, become a member
 
 Admin Dashboard: Manage users, posts, roles
 
-# Role-Based Route Protection
+- Role-Based Route Protection
 
 PrivateRoute for logged-in users
 
@@ -57,11 +57,11 @@ AdminRoute for admin-only pages
 
 Unauthorized users see 403 Forbidden page
 
-# Membership Payment
+- Membership Payment
 
 Integrated with Stripe for secure payments
 
-# Responsive Design
+- Responsive Design
 
 Tailwind CSS + DaisyUI
 
