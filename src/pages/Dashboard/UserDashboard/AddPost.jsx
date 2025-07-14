@@ -39,7 +39,7 @@ const AddPost = () => {
     queryKey: ["posts", user?.email],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/postsbyuser?email=${user?.email}`
+        `https://forum-server-psi.vercel.app/postsbyuser?email=${user?.email}`
       );
       return res.data;
     },

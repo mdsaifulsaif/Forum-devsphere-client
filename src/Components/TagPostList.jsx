@@ -18,13 +18,15 @@ const TagPostList = ({ tag }) => {
   if (isLoading) return <LoadingPage />;
 
   return (
-    <div className="mt-8 max-w-6xl mx-auto">
+    <div className="mt-8 max-w-6xl px-3 mx-auto">
       <h2 className="text-2xl font-semibold text-[#129990] mb-4">
         Posts tagged with #{tag}
       </h2>
 
       {posts.length === 0 ? (
-        <p className="text-gray-600">No posts found for this tag.</p>
+        <p className="text-gray-600 text-center">
+          No posts found for this tag.
+        </p>
       ) : (
         <div className="grid gap-4">
           {posts.map((post) => (

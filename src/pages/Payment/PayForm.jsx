@@ -61,7 +61,7 @@ function PayForm() {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: "hsifsdf",
+          name: "name",
         },
       },
     });
@@ -88,7 +88,6 @@ function PayForm() {
       }
     }
   };
-  console.log(userDAta);
   if (isPending) {
     return <LoadingPage />;
   }

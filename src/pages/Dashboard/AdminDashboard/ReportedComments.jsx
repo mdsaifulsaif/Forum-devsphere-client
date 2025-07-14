@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import LoadingPage from "../../../Components/LoadingPage";
 
 const ReportedComments = () => {
   const axiosSecure = UseAxiosSecure();
@@ -60,7 +61,7 @@ const ReportedComments = () => {
         Reported Comments
       </h2>
       {isLoading ? (
-        <p>Loading...</p>
+        <LoadingPage />
       ) : reports.length === 0 ? (
         <p className="text-gray-500">No reports found.</p>
       ) : (
