@@ -116,9 +116,7 @@ const Register = () => {
 
           axiosSecure
             .post("/users", saveUser)
-            .then((res) => {
-              console.log("User saved to DB:", res.data);
-            })
+            .then((res) => {})
             .catch((err) => {
               console.error("User save error:", err);
             });

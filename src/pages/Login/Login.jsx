@@ -1,6 +1,6 @@
 import React, { use } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext/AuthContext";
@@ -11,6 +11,7 @@ import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 const Login = () => {
   const axiosSecure = UseAxiosSecure();
   const navigate = useNavigate();
+  const location = useLocation();
   const { LoginUserEmailPassword, createUserUseGoogl } = use(AuthContext);
   const {
     register,
@@ -19,7 +20,6 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Login Data:", data);
     const email = data.email;
     const password = data.password;
 
@@ -37,6 +37,7 @@ const Login = () => {
             },
             buttonsStyling: false,
           });
+          navigate("/");
         }
       })
       .catch((error) => {
