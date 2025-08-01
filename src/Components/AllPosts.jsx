@@ -24,7 +24,7 @@ const AllPosts = () => {
       const endpoint =
         sortBy === "popular" ? "/posts/popular" : "/posts/paginated";
       const res = await axiosSecure.get(endpoint, {
-        params: { page, limit: 5 },
+        params: { page, limit: 6 },
       });
       return res.data;
     },
@@ -101,7 +101,7 @@ const AllPosts = () => {
         </button>
       </div>
 
-      <div className="grid gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {posts.map((post) => {
           const {
             _id,
