@@ -6,6 +6,7 @@ import TagList from "../Components/TagList";
 import MembershipBenefits from "../Components/MembershipBenefits";
 import JoinCommunityCTA from "./JoinCommunityCTA";
 import Testimonials from "./Testimonials";
+import PopularPostsWithAuthors from "./PopularPostsWithAuthors";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <TagList />
       <AnnouncementSection />
       <AllPosts />
+      <PopularPostsWithAuthors />
       <MembershipBenefits />
       <JoinCommunityCTA />
       <Testimonials />
