@@ -32,7 +32,7 @@ export default function MembershipBenefits() {
   }
 
   return (
-    <section className="bg-white py-20 px-6">
+    <section className="bg-white py-10 px-6">
       {/* Heading */}
       <div className="max-w-4xl mx-auto text-center mb-14">
         <h2 className="text-4xl font-bold text-[#129990]">

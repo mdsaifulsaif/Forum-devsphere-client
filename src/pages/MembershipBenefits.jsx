@@ -2,7 +2,7 @@ import { FaCheckCircle, FaTimesCircle, FaCrown } from "react-icons/fa";
 
 export default function MembershipBenefits() {
   return (
-    <section className="bg-white dark:bg-gray-900 py-16 px-6">
+    <section className="bg-white   px-6">
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-[#129990]">
           Membership Benefits
