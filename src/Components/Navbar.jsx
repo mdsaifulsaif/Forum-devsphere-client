@@ -17,7 +17,7 @@ const Navbar = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false); // ✅ new state
   const { user, LogoutUser } = useContext(AuthContext);
 
-  // ✅ Fetch user info
+  //  Fetch user info
   const { isLoading: userlod, data: userInfo = {} } = useQuery({
     queryKey: ["userInfo", user?.email],
     queryFn: async () => {

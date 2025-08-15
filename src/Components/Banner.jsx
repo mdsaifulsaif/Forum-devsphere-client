@@ -29,7 +29,7 @@ const Banner = () => {
 
         {/* Content */}
         <div className="z-10 text-center px-4 max-w-2xl w-full">
-          <h1 className="text-2xl md:text-4xl font-bold mb-4">
+          <h1 className="text-4xl md:text-4xl font-bold mb-4">
             Explore Discussions, Tags & Ideas
           </h1>
 
