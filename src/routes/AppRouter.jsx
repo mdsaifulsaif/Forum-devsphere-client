@@ -21,6 +21,7 @@ import Payment from "../pages/Payment/Payment";
 import PrivateRouteAdmin from "../PrivetRouts/PrivetRoutesforAdmin/PrivateRouteAdmin";
 import ForbiddenPage from "../Components/ForbiddenPage";
 import DashboardRedirect from "../Components/DashboardRedirect";
+import About from "../pages/About";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
       {
         path: "/joinus",
@@ -83,6 +88,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/comments/:postId",
         element: <PostComments />,
       },
+
       {
         path: "/dashboard/admin-profile",
         // element: <AdminProfile />,

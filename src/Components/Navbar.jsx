@@ -43,6 +43,11 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/about" className="hover:text-[#129990]">
+          About
+        </NavLink>
+      </li>
+      <li>
         <NavLink
           to={`/payment/${userInfo._id}`}
           className="hover:text-[#129990]"
@@ -67,7 +72,7 @@ const Navbar = () => {
           {user ? (
             <div className="relative">
               <img
-                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)} // ✅ toggle click
+                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)} //  toggle click
                 src={user?.photoURL}
                 alt="Profile"
                 className="w-8 h-8 rounded-full cursor-pointer border-2 border-[#129990]"

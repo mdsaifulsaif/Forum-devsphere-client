@@ -144,7 +144,7 @@ const Login = () => {
   // };
 
   return (
-    <div className="min-h-screen grid md:grid-cols-2 items-center bg-gray-50 px-4">
+    <div className="min-h-screen grid md:w-6xl mx-auto md:grid-cols-2 items-center bg-gray-50 px-4">
       {/* Left Side - Animation */}
       <div className="hidden md:flex justify-center">
         <Lottie

@@ -164,7 +164,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen grid md:grid-cols-2 items-center bg-gray-50 px-4">
+    <div className="min-h-screen grid md:w-6xl mx-auto py-5 md:grid-cols-2 items-center bg-gray-50 px-4">
       {/* Left Side - Lottie */}
       <div className="hidden md:flex justify-center">
         <Lottie
