@@ -1,4 +1,6 @@
 import { FaQuoteLeft } from "react-icons/fa";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 export default function Testimonials() {
   const testimonials = [
@@ -26,10 +28,38 @@ export default function Testimonials() {
       quote:
         "I’ve met so many like-minded developers here. It feels like a professional family where everyone helps each other grow.",
     },
+    {
+      id: 4,
+      name: "Biplop Hossain",
+      role: "Backend Developer",
+      img: "https://i.pravatar.cc/100?img=4",
+      quote:
+        "I’ve met so many like-minded developers here. It feels like a professional family where everyone helps each other grow.",
+    },
+    // Add more testimonials if needed
   ];
 
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 1280 },
+      items: 3,
+    },
+    desktop: {
+      breakpoint: { max: 1280, min: 1024 },
+      items: 2,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 640 },
+      items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 640, min: 0 },
+      items: 1,
+    },
+  };
+
   return (
-    <section className="bg-gray-50 py-16 px-4">
+    <section className="bg-gray-50 py-10 px-4">
       {/* Heading */}
       <div className="max-w-4xl mx-auto text-center mb-12 px-2">
         <h2 className="text-3xl sm:text-4xl font-bold text-[#129990]">
@@ -40,8 +70,19 @@ export default function Testimonials() {
         </p>
       </div>
 
-      {/* Testimonials Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {/* Carousel */}
+      <Carousel
+        responsive={responsive}
+        infinite={true}
+        autoPlay={false}
+        autoPlaySpeed={5000}
+        keyBoardControl={true}
+        customTransition="all 0.5s"
+        transitionDuration={500}
+        containerClass="max-w-6xl mx-auto"
+        removeArrowOnDeviceType={[]}
+        itemClass="px-2"
+      >
         {testimonials.map((t) => (
           <div
             key={t.id}
@@ -62,7 +103,7 @@ export default function Testimonials() {
             <p className="text-gray-500 text-xs sm:text-sm">{t.role}</p>
           </div>
         ))}
-      </div>
+      </Carousel>
     </section>
   );
 }
