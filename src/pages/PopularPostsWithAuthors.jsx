@@ -8,7 +8,9 @@ export default function TopContributors() {
   useEffect(() => {
     const fetchPopularPosts = async () => {
       try {
-        const res = await fetch();
+        const res = await fetch(
+          "https://forum-server-psi.vercel.app/posts/popular?page=1&limit=3"
+        );
         const data = await res.json();
 
         // Extract top authors
